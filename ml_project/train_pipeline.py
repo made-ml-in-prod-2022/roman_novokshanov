@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import os
 
 import logging
 import logging.config
@@ -77,6 +78,10 @@ def train_pipeline(config):
     )
     logger.info(f"Val_features.shape is {val_features_prepared.shape}")
     with mlflow.start_run():
+
+        # mlflow tracking config
+        mlflow.log_params(config)
+        
         # train model
         model = train_model(train_features, train_target,
                             train_params.model.model_params)
@@ -87,8 +92,8 @@ def train_pipeline(config):
         # evaluate prediction
         metrics = evaluate_model(predicts, val_target)
 
-        # use mlflow tracking
-        mlflow.log_param("metrics", metrics)
+        # mlflow tracking metrics
+        mlflow.log_metric("metrics", metrics)
 
         if train_params.schema.metric_path is not None:
             with open(current_path + train_params.schema.metric_path, "w") as metric_file:
@@ -100,6 +105,7 @@ def train_pipeline(config):
                 model, current_path + train_params.schema.output_model_path
             )
             logger.info(f"Model is serialized to {path_to_model}")
+            
         logger.info(f"Training is completed.")
     return path_to_model, metrics
 
