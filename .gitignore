@@ -97,4 +97,5 @@ outputs/
 .dvc/cache
 .dvc/tmp
 .dvc/plots
+models/
 
