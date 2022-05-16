@@ -9,6 +9,8 @@ from omegaconf import DictConfig
 import hydra
 
 import pandas as pd
+import mlflow
+import mlflow.sklearn
 
 from ml_project.data.make_dataset import read_data, split_train_val_data
 from ml_project.enities.train_pipeline_params import read_training_pipeline_params
@@ -74,28 +76,31 @@ def train_pipeline(config):
         train_features, val_features
     )
     logger.info(f"Val_features.shape is {val_features_prepared.shape}")
+    with mlflow.start_run():
+        # train model
+        model = train_model(train_features, train_target,
+                            train_params.model.model_params)
 
-    # train model
-    model = train_model(train_features, train_target,
-                        train_params.model.model_params)
+        # get predictions
+        predicts = predict_model(model, val_features_prepared)
 
-    # get predictions
-    predicts = predict_model(model, val_features_prepared)
+        # evaluate prediction
+        metrics = evaluate_model(predicts, val_target)
 
-    # evaluate prediction
-    metrics = evaluate_model(predicts, val_target)
+        # use mlflow tracking
+        mlflow.log_param("metrics", metrics)
 
-    if train_params.schema.metric_path is not None:
-        with open(current_path + train_params.schema.metric_path, "w") as metric_file:
-            json.dump(metrics, metric_file)
-        logger.info(f"Metrics is {metrics}")
+        if train_params.schema.metric_path is not None:
+            with open(current_path + train_params.schema.metric_path, "w") as metric_file:
+                json.dump(metrics, metric_file)
+            logger.info(f"Metrics is {metrics}")
 
-    if train_params.schema.output_model_path is not None:
-        path_to_model = serialize_model(
-            model, current_path + train_params.schema.output_model_path
-        )
-        logger.info(f"Model is serialized to {path_to_model}")
-    logger.info(f"Training is completed.")
+        if train_params.schema.output_model_path is not None:
+            path_to_model = serialize_model(
+                model, current_path + train_params.schema.output_model_path
+            )
+            logger.info(f"Model is serialized to {path_to_model}")
+        logger.info(f"Training is completed.")
     return path_to_model, metrics
 
 
