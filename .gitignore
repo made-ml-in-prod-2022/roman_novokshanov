@@ -98,4 +98,5 @@ outputs/
 .dvc/tmp
 .dvc/plots
 models/
+mlruns/
 
