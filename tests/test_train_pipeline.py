@@ -24,12 +24,24 @@ TRAINING_PARAMS_STR = dedent(
             'model_type': 'RandomForestClassifier'
             'random_state': 42
     'schema': 
-        'input_data_path': './ml_project/data/raw/heart.csv'
+        'input_data_path': './ml_project/data/raw/train.csv'
         'output_model_path': './ml_project/models/model.pkl'
         'metric_path': './ml_project/models/metrics.json'
-        'splitting_params': 
+        'downloading_params':
+            'use_download': 'True'
+            's3_bucket': 'made-mlprod-hw1'
+            'endpointurl': 'https://ib.bizmrg.com'
+            'paths': 
+                - 'train.csv'
+                - 'test.csv'
+            'output_folder': './data/raw/'
+        'splitting_params':
             'val_size': 0.1
-            'random_state': 42 
+            'random_state': 42
+        'mlflow':
+            'use_mlflow': 'False'
+            'mlflow_uri': 'http://localhost:5001'
+            'mlflow_experiment': 'test'
     'features': 
         'feature_params': 
             'categorical_features': 
@@ -48,6 +60,7 @@ TRAINING_PARAMS_STR = dedent(
                 - 'thalach'
                 - 'oldpeak'
             'target_col': 'condition'
+            'use_log_trick': 'False'
     """
 )
 
@@ -70,7 +83,7 @@ def test_can_read_training_pipeline_params(training_params_fio, caplog):
             training_params_config)
 
         training_params_local = {
-            "input_data_path": "./ml_project/data/raw/heart.csv",
+            "input_data_path": "./ml_project/data/raw/train.csv",
             "output_model_path": "./ml_project/models/model.pkl",
             "train_params": {
                 "model_type": "RandomForestClassifier",
@@ -164,9 +177,21 @@ def training_params_modified_fio(dataset_fio, tmpdir):
                 'input_data_path': {}
                 'output_model_path': None
                 'metric_path': None
-                'splitting_params': 
+                'downloading_params':
+                    'use_download': 'True'
+                    's3_bucket': 'made-mlprod-hw1'
+                    'endpointurl': 'https://ib.bizmrg.com'
+                    'paths': 
+                        - 'train.csv'
+                        - 'test.csv'
+                    'output_folder': './data/raw/'
+                'splitting_params':
                     'val_size': 0.1
-                    'random_state': 42 
+                    'random_state': 42
+                'mlflow':
+                    'use_mlflow': 'False'
+                    'mlflow_uri': 'http://localhost:5001'
+                    'mlflow_experiment': 'test' 
             'features': 
                 'feature_params': 
                     'categorical_features': 
@@ -185,6 +210,7 @@ def training_params_modified_fio(dataset_fio, tmpdir):
                         - 'thalach'
                         - 'oldpeak'
                     'target_col': 'condition'
+                    'use_log_trick': 'False'
             """.format(os.path.relpath(str(dataset_fio)))
     )
 

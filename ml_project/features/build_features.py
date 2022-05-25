@@ -5,7 +5,7 @@ import pandas as pd
 from sklearn.impute import SimpleImputer
 from sklearn.pipeline import make_pipeline, Pipeline, make_union
 from sklearn.base import BaseEstimator, TransformerMixin
-from sklearn.compose import make_column_transformer
+from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder, MinMaxScaler
 
 from ml_project.enities import FeatureParams
@@ -45,6 +45,12 @@ class FeaturesTransformer(BaseEstimator, TransformerMixin):
              for x in range(categorical_features_transformed.shape[1])]
         )
 
+def make_features(transformer: FeaturesTransformer, df: pd.DataFrame) -> pd.DataFrame:
+    return transformer.transform(df)
+
+def build_transformer(params: FeatureParams) -> FeaturesTransformer:
+    transformer = FeaturesTransformer(params)
+    return transformer
 
 def extract_target(df: pd.DataFrame, params: FeatureParams) -> pd.Series:
     target = df[params.target_col]

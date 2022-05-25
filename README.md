@@ -4,13 +4,13 @@
 
 ## Setting up environment
 
-Requirements: `conda, python >= 3.7`
+Requirements: `conda, python >= 3.7.13`
 
 Installation:
 
 **conda:**
 
-`conda create --name myenv python=3.7 --file requirements.txt -c conda-forge`
+`conda create --name myenv python=3.7.13 --file requirements.txt -c conda-forge`
 
 `conda activate myenv`
 

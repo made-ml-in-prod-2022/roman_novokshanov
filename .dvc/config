@@ -3,3 +3,5 @@
 ['remote "storage"']
     url = s3://made-mlprod-hw1
     endpointurl = https://ib.bizmrg.com
+['remote "s3://made-mlprod-hw1"']
+    url = https://ib.bizmrg.com
