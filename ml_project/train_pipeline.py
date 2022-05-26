@@ -53,7 +53,7 @@ def train_pipeline(config: DictConfig):
         mlflow.set_experiment(training_pipeline_params.schema.mlflow.mlflow_experiment)
         with mlflow.start_run():
             #mlflow.log_artifact(config_path)
-            model_path, metrics = run_train_pipeline(training_pipeline_params.schema)
+            model_path, metrics = run_train_pipeline(training_pipeline_params)
             mlflow.log_metrics(metrics)
             mlflow.log_artifact(model_path)
     else:
