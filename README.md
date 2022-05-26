@@ -49,3 +49,8 @@ Jupyter notebook:
 * default config with model specified (rf, lr):
 
 `python -m ml_project.predict_pipeline model=lr`
+
+## Mlflow server UI:
+
+`mlflow server --backend-store-uri sqlite:///mydb.sqlite --default-artifact-root $(pwd)/ml_project/mlruns/ -p 5001`
+
