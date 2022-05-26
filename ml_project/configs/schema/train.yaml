@@ -13,6 +13,6 @@ splitting_params:
   val_size: 0.1
   random_state: 42
 mlflow:
-  use_mlflow: False
-  mlflow_uri: 'http://localhost:5001'
+  use_mlflow: True
+  mlflow_uri: 'http://127.0.0.1:5001'
   mlflow_experiment: 'test'
