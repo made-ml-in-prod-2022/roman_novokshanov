@@ -6,6 +6,7 @@ import logging
 import logging.config
 import json
 from pathlib import Path
+from urllib.parse import urlparse
 
 import yaml
 from omegaconf import DictConfig
@@ -52,10 +53,24 @@ def train_pipeline(config: DictConfig):
         mlflow.set_tracking_uri(training_pipeline_params.schema.mlflow.mlflow_uri)
         mlflow.set_experiment(training_pipeline_params.schema.mlflow.mlflow_experiment)
         with mlflow.start_run():
-            model_path, metrics = run_train_pipeline(training_pipeline_params)
+            model_path, metrics, model = run_train_pipeline(training_pipeline_params)
             mlflow.log_metrics(metrics)
             mlflow.log_artifact(model_path)
             mlflow.log_artifact(os.getcwd() + '/.hydra')
+
+            tracking_url_type_store = urlparse(mlflow.get_tracking_uri()).scheme
+
+            # Model registry does not work with file store
+            if tracking_url_type_store != "file":
+
+                # Register the model
+                # There are other ways to use the Model Registry, which depends on the use case,
+                # please refer to the doc for more information:
+                # https://mlflow.org/docs/latest/model-registry.html#api-workflow
+                mlflow.sklearn.log_model(model, "model", registered_model_name="Model " + training_pipeline_params.model)
+            else:
+                mlflow.sklearn.log_model(model, "model")
+
     else:
         return run_train_pipeline(training_pipeline_params)
 
@@ -128,7 +143,7 @@ def run_train_pipeline(train_params):
 
     logger.info(f"Training is completed.")
     
-    return path_to_model, metrics
+    return path_to_model, metrics, model
 
 
 def setup_logging():
