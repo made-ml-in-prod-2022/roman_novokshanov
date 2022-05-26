@@ -55,7 +55,7 @@ def train_pipeline(config: DictConfig):
             model_path, metrics = run_train_pipeline(training_pipeline_params)
             mlflow.log_metrics(metrics)
             mlflow.log_artifact(model_path)
-            mlflow.log_artifact(config)
+            mlflow.log_artifact(os.getcwd() + '/.hydra')
     else:
         return run_train_pipeline(training_pipeline_params)
 
