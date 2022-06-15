@@ -12,9 +12,7 @@ from ml_project.train_pipeline import (
     DEFAULT_LOGGING_CONFIG_FILEPATH,
 )
 
-from ml_project.enities.train_pipeline_params import (
-    read_training_pipeline_params,
-)
+from ml_project.enities.train_pipeline_params import read_training_pipeline_params
 
 
 TRAINING_PARAMS_STR = dedent(
@@ -24,9 +22,9 @@ TRAINING_PARAMS_STR = dedent(
             'model_type': 'RandomForestClassifier'
             'random_state': 42
     'schema': 
-        'input_data_path': './ml_project/data/raw/train.csv'
-        'output_model_path': './ml_project/models/model.pkl'
-        'metric_path': './ml_project/models/metrics.json'
+        'input_data_path': './data/raw/train.csv'
+        'output_model_path': './models/model.pkl'
+        'metric_path': './models/metrics.json'
         'downloading_params':
             'use_download': 'True'
             's3_bucket': 'made-mlprod-hw1'
@@ -79,12 +77,11 @@ def test_can_read_training_pipeline_params(training_params_fio, caplog):
         with open(training_params_fio, "r") as input_stream:
             training_params_config = yaml.safe_load(input_stream)
 
-        training_params_loaded = read_training_pipeline_params(
-            training_params_config)
+        training_params_loaded = read_training_pipeline_params(training_params_config)
 
         training_params_local = {
-            "input_data_path": "./ml_project/data/raw/train.csv",
-            "output_model_path": "./ml_project/models/model.pkl",
+            "input_data_path": "./data/raw/train.csv",
+            "output_model_path": "./models/model.pkl",
             "train_params": {
                 "model_type": "RandomForestClassifier",
                 "random_state": 42,
@@ -128,30 +125,23 @@ def generate_random_dataset(random_state=42, size=100):
     data = pd.DataFrame()
 
     data["age"] = np.random.uniform(low=5.0, high=100.0, size=size)
-    data["sex"] = np.random.choice(
-        [0, 1], replace=True, p=[0.5] * 2, size=size)
-    data["cp"] = np.random.choice(
-        [0, 1, 2, 3], replace=True, p=[0.25] * 4, size=size)
+    data["sex"] = np.random.choice([0, 1], replace=True, p=[0.5] * 2, size=size)
+    data["cp"] = np.random.choice([0, 1, 2, 3], replace=True, p=[0.25] * 4, size=size)
     data["trestbps"] = np.random.uniform(low=50.0, high=250.0, size=size)
     data["chol"] = np.random.uniform(low=50.0, high=400.0, size=size)
-    data["fbs"] = np.random.choice(
-        [0, 1], replace=True, p=[0.5] * 2, size=size)
+    data["fbs"] = np.random.choice([0, 1], replace=True, p=[0.5] * 2, size=size)
     data["restecg"] = np.random.choice(
         [0, 1, 2], replace=True, p=[1.0 / 3.0] * 3, size=size
     )
     data["thalach"] = np.random.uniform(low=70.0, high=200.0, size=size)
-    data["exang"] = np.random.choice(
-        [0, 1], replace=True, p=[0.5] * 2, size=size)
+    data["exang"] = np.random.choice([0, 1], replace=True, p=[0.5] * 2, size=size)
     data["oldpeak"] = np.random.uniform(low=0.0, high=7.0, size=size)
     data["slope"] = np.random.choice(
         [0, 1, 2], replace=True, p=[1.0 / 3] * 3, size=size
     )
-    data["ca"] = np.random.choice(
-        [0, 1, 2, 3, 4], replace=True, p=[0.2] * 5, size=size)
-    data["thal"] = np.random.choice(
-        [0, 1, 2, 3], replace=True, p=[0.25] * 4, size=size)
-    data["condition"] = np.random.choice(
-        [0, 1], replace=True, p=[0.5] * 2, size=size)
+    data["ca"] = np.random.choice([0, 1, 2, 3, 4], replace=True, p=[0.2] * 5, size=size)
+    data["thal"] = np.random.choice([0, 1, 2, 3], replace=True, p=[0.25] * 4, size=size)
+    data["condition"] = np.random.choice([0, 1], replace=True, p=[0.5] * 2, size=size)
 
     return data
 
@@ -211,7 +201,9 @@ def training_params_modified_fio(dataset_fio, tmpdir):
                         - 'oldpeak'
                     'target_col': 'condition'
                     'use_log_trick': 'False'
-            """.format(os.path.relpath(str(dataset_fio)))
+            """.format(
+            os.path.relpath(str(dataset_fio))
+        )
     )
 
     fio = tmpdir.join("training_params_modified.yaml")
@@ -228,9 +220,7 @@ def test_train_pipeline(training_params_modified_fio, caplog):
 
         train_pipeline(training_params_modified_config)
 
-        assert (
-            "Reading train pipeline params" in caplog.text
-        ), "Train pipeline failed"
+        assert "Reading train pipeline params" in caplog.text, "Train pipeline failed"
 
         assert (
             "Start train pipeline with params:" in caplog.text
