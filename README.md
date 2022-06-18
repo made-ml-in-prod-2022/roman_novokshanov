@@ -58,3 +58,6 @@ Jupyter notebook:
 python setup.py sdist
 docker build -t ml_project_train:v1 ./
 docker run --rm -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} ml_project_train:v1
+
+mount local folder:
+docker run --rm -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} -v ${PWD}/models:/models ml_project_train:v1
