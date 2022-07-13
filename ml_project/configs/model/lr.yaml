@@ -1,3 +1,0 @@
-model_params:
-  model_type: "LogisticRegression"
-  random_state: 42
