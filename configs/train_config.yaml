@@ -1,4 +1,0 @@
-defaults:
-  - model: rf
-  - schema: train
-  - features: features
