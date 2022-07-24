@@ -25,6 +25,7 @@ TRAINING_PARAMS_STR = dedent(
         'input_data_path': './data/raw/train.csv'
         'output_model_path': './models/model.pkl'
         'metric_path': './models/metrics.json'
+        'models_path': './models'
         'downloading_params':
             'use_download': 'True'
             's3_bucket': 'made-mlprod-hw1'
@@ -167,6 +168,7 @@ def training_params_modified_fio(dataset_fio, tmpdir):
                 'input_data_path': {}
                 'output_model_path': None
                 'metric_path': None
+                'models_path': None
                 'downloading_params':
                     'use_download': 'True'
                     's3_bucket': 'made-mlprod-hw1'

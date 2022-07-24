@@ -30,6 +30,7 @@ class SchemaTrainParams:
     input_data_path: str
     output_model_path: str
     metric_path: str    
+    models_path: str
     downloading_params: DownloadingParams
     splitting_params: SplittingParams
     mlflow: MlflowParams

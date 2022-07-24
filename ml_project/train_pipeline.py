@@ -144,11 +144,13 @@ def run_train_pipeline(train_params):
     )
 
     if train_params.schema.metric_path is not None:
+        os.makedirs(current_path + train_params.schema.models_path, exist_ok=True)
         with open(current_path + train_params.schema.metric_path, "w") as metric_file:
             json.dump(metrics, metric_file)
         logger.info(f"Metrics is {metrics}")
 
     if train_params.schema.output_model_path is not None:
+        os.makedirs(current_path + train_params.schema.models_path, exist_ok=True)
         path_to_model = serialize_model(
             inference_pipeline, current_path + train_params.schema.output_model_path
         )
