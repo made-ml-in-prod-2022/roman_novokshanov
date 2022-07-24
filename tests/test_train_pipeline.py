@@ -23,11 +23,11 @@ TRAINING_PARAMS_STR = dedent(
             'random_state': 42
     'schema': 
         'input_data_path': './data/raw/train.csv'
-        'output_model_path': './models/model.pkl'
-        'metric_path': './models/metrics.json'
-        'models_path': './models'
+        'output_model_file': 'model.pkl'
+        'metric_file': 'metrics.json'
+        'models_path': './models/'
         'downloading_params':
-            'use_download': 'True'
+            'use_download': 'False'
             's3_bucket': 'made-mlprod-hw1'
             'endpointurl': 'https://ib.bizmrg.com'
             'paths': 
@@ -77,7 +77,7 @@ def test_can_read_training_pipeline_params(training_params_fio, caplog):
 
         with open(training_params_fio, "r") as input_stream:
             training_params_config = yaml.safe_load(input_stream)
-
+        
         training_params_loaded = read_training_pipeline_params(training_params_config)
 
         training_params_local = {
@@ -166,8 +166,8 @@ def training_params_modified_fio(dataset_fio, tmpdir):
                     'random_state': 42
             'schema': 
                 'input_data_path': {}
-                'output_model_path': None
-                'metric_path': None
+                'output_model_file': None
+                'metric_file': None
                 'models_path': None
                 'downloading_params':
                     'use_download': 'True'

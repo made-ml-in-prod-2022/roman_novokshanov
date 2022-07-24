@@ -28,8 +28,8 @@ class MlflowParams:
 @dataclass()
 class SchemaTrainParams:
     input_data_path: str
-    output_model_path: str
-    metric_path: str    
+    output_model_file: str
+    metric_file: str    
     models_path: str
     downloading_params: DownloadingParams
     splitting_params: SplittingParams

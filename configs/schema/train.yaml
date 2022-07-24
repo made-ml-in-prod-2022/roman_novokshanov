@@ -1,9 +1,9 @@
 input_data_path: "./data/raw/train.csv"
-output_model_path: "./models/model.pkl"
-metric_path: "./models/metrics.json"
-models_path: "./models"
+output_model_file: "model.pkl"
+metric_file: "metrics.json"
+models_path: "./models/"
 downloading_params:
-  use_download: True
+  use_download: False
   s3_bucket: "made-mlprod-hw1"
   endpointurl: "https://ib.bizmrg.com"
   paths:
