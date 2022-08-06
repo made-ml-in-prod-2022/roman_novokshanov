@@ -1,0 +1,11 @@
+[2022-07-24 11:52:56,468][__main__][INFO] - Reading train pipeline params
+[2022-07-24 11:52:56,476][__main__][INFO] - mlflow used: False
+[2022-07-24 11:52:56,477][__main__][INFO] - Start train pipeline with params: TrainingPipelineParams(model=ModelParams(model_params=TrainingParams(model_type='LogisticRegression', random_state=42)), schema=SchemaTrainParams(input_data_path='./data/raw/train.csv', output_model_file='model.pkl', metric_file='metrics.json', models_path='./models/', downloading_params=DownloadingParams(use_download=False, s3_bucket='made-mlprod-hw1', endpointurl='https://ib.bizmrg.com', paths=['train.csv', 'test.csv'], output_folder='./data/raw/'), splitting_params=SplittingParams(val_size=0.1, random_state=42), mlflow=MlflowParams(use_mlflow=False, mlflow_uri='http://127.0.0.1:5001', mlflow_experiment='test')), features=FeaturesParams(feature_params=FeatureParams(categorical_features=['sex', 'cp', 'fbs', 'restecg', 'exang', 'slope', 'thal', 'ca'], numerical_features=['age', 'trestbps', 'chol', 'thalach', 'oldpeak'], target_col='condition', use_log_trick=False)))
+[2022-07-24 11:52:56,484][__main__][INFO] - Data.shape is (297, 14)
+[2022-07-24 11:52:56,489][__main__][INFO] - Train_df.shape is (267, 14)
+[2022-07-24 11:52:56,489][__main__][INFO] - Val_df.shape is (30, 14)
+[2022-07-24 11:52:56,511][__main__][INFO] - Train_features.shape is (267, 20)
+[2022-07-24 11:52:56,511][__main__][INFO] - Val_features.shape is (30, 13)
+[2022-07-24 11:52:56,532][__main__][INFO] - Metrics is {'accuracy': 0.8666666666666667, 'r2_score': 0.4642857142857143, 'rmse': 0.3651483716701107, 'mae': 0.13333333333333333}
+[2022-07-24 11:52:56,535][__main__][INFO] - Model is serialized to /Users/romann/work/MADE/STUDY/2_ML_PROD/repo/roman_novokshanov/./models/model.pkl
+[2022-07-24 11:52:56,535][__main__][INFO] - Training is completed.

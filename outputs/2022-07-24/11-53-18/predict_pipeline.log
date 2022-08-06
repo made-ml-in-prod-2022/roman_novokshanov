@@ -1,0 +1,4 @@
+[2022-07-24 11:53:18,243][__main__][INFO] - Reading predict pipeline params
+[2022-07-24 11:53:18,249][__main__][INFO] - Start predict pipeline with params: PredictPipelineParams(model=ModelParams(model_params=PredictParams(model_type='LogisticRegression', random_state=42)), schema=SchemaPredictParams(input_data_path='./data/raw/test.csv', input_model_path='./models/model.pkl', output_predict_path='./models/prediction.csv'), features=FeaturesParams(feature_params=FeatureParams(categorical_features=['sex', 'cp', 'fbs', 'restecg', 'exang', 'slope', 'thal', 'ca'], numerical_features=['age', 'trestbps', 'chol', 'thalach', 'oldpeak'], target_col='condition', use_log_trick=False)))
+[2022-07-24 11:53:18,258][__main__][INFO] - Data.shape is (297, 14)
+[2022-07-24 11:53:18,276][__main__][INFO] - Prediction is completed

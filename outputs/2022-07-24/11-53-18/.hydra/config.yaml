@@ -1,0 +1,27 @@
+model:
+  model_params:
+    model_type: LogisticRegression
+    random_state: 42
+schema:
+  input_data_path: ./data/raw/test.csv
+  input_model_path: ./models/model.pkl
+  output_predict_path: ./models/prediction.csv
+features:
+  feature_params:
+    categorical_features:
+    - sex
+    - cp
+    - fbs
+    - restecg
+    - exang
+    - slope
+    - thal
+    - ca
+    numerical_features:
+    - age
+    - trestbps
+    - chol
+    - thalach
+    - oldpeak
+    target_col: condition
+    use_log_trick: false

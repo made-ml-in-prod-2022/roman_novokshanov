@@ -21,6 +21,7 @@ from src.model_fit_predict import (
     deserialize_model,
 )
 
+
 DEFAULT_DATASET_PATH = "./data/test.csv"
 DEFAULT_CONFIG_PATH = "./configs/predict_config.yaml"
 DEFAULT_MODEL_PATH = "./models/model.pkl"
@@ -96,7 +97,9 @@ def predict_model(
 
 
 def make_predict(
-    data: List, features: List[str], model: Pipeline,
+    data: List,
+    features: List[str],
+    model: Pipeline,
 ) -> List[PriceResponse]:
     data = pd.DataFrame(data, columns=features)
     ids = [int(x) for x in data["Id"]]
@@ -115,7 +118,6 @@ def main():
     return "it is entry point of our predictor"
 
 
-@hydra.main(config_path="configs", config_name="predict_config")
 @app.on_event("startup")
 def predict_pipeline_command(config: DictConfig) -> None:
     logger.info(f"Startup config {config}...")
